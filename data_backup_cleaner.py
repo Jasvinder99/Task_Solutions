@@ -1,73 +1,72 @@
-#Task : Backup Cleaner
-#.................................................................................................................
-import os, sys, time
-from calendar import calendar, monthrange
-from datetime import datetime, timedelta
-#----------------------------------------------------------------------------
-
-class Backup_Cleaner:
-
-    def __init__(self, number_days, weeks_days, path):
-        self.number_days = number_days
-        self.weeks_days = weeks_days     #store monday,tueday ...
-        self.path = path
-
-    # ----------------------------------------------------------------------
-
-    def cleaner(self):
-
-        temp_data = []                                        # temporary list of weekdays
-
-        for folder_name in os.walk(self.path):
-
-            if 'bucket' in folder_name[0]:
-                self.path = folder_name[0]
-                # Consider todays date  as '2020-09-18'
-                current_date = '2020-09-18'
-                current_date = datetime.strptime(current_date, '%Y-%m-%d').date()   #set date as per format
-                temp_date = current_date - timedelta(days = number_days)   #get date from last x days, where x value taken from user or set = 5
+import os
+from datetime import date, datetime
+from typing import Optional
+from calendar import monthrange, day_name
 
 
-                for i in range(self.number_days):
-                    single_day = current_date - timedelta(days = self.weeks_days + 1, weeks=i)  #get past saturday
-                    temp_data.append(single_day)
+class BackupCleaner():
 
-                for backup_files in os.walk(self.path, topdown=False):
+    def __init__(self, current_date: Optional, file_date: Optional) :
+        self.current_date: Optional[date] = current_date
+        self.file_date: Optional[date] = file_date
 
-                    for file in (backup_files[2]):    #
-                        only_date = (file[file.index('2020'): file.index('.txt')])
-                        only_date = datetime.strptime(only_date, '%Y-%m-%d').date() #only store date ....stripinto format
-
-                        if temp_date > only_date != only_date.replace(day = monthrange(only_date.year, only_date.month)[1]) and only_date not in temp_data:
-                            clean_path = (self.path + '\\' + file)
-                            self.clear_path(clean_path)
-
-
-                print("Files are  removed from ", self.path)
-
-    #-----------------------------------------------------------------------------------------
-
-    def clear_path(self, path):
-        if os.path.isdir(path):
-            pass
+#------------------------------------------------------------------------------------------------------------------
+    def check_five_days(self, file_name: Optional) -> bool:
+        day_diff  = self.current_date - self.file_date
+        if day_diff.days >= 5:
+            return True
         else:
-            try:
-                if os.path.exists(path):
-                    os.remove(path)
-            except OSError:
-                print("Unable to delete the files : ", path)
+            return False
 
+#-------------------------------------------------------------------------------------------------------------------
+    def check_last_day(self, file_name) -> bool:
+        if self.file_date.day == monthrange(self.file_date.year, self.file_date.month)[1]:
+            return True
+        else:
+            return False
 
-
-# ----------------------------------------------------------------------
-#main program
+#--------------------------------------------------------------------------------------------------------------------
+    def check_sat(self, file_name) -> bool:
+        if day_name[self.file_date.weekday()] == 'Saturday':
+                return True
+        else:
+            return False
+#-----------------------------------------------------------------------------------------------------------------
+#Main Program
 if __name__ == "__main__":
-    print("*-"*30)
-    number_days = int(input("\nEnter number of days : "))
-    weeks_days = int(input("choose weekday:\n 0.Mon, 1.Tues, 2.Wed, 3.Thus, 4.Fri, 5.Sat, 6.Sun :"))
+    #Taking current date as 2020 - 9 -18 as of now
+    #current_date = datetime.now()
 
-    path = input("Provide path for cleaning of data to folder  :")    # user input, for removing data from buckets
-    print("*:"*10)
+    path: [str] = input("Provide the path to folder")
+    current_date: Optional[date] = datetime.strptime('2020-9-18', '%Y-%m-%d')
+    #count of last 4 saturdays
+    saturday_count: int = 0
 
-    files = Backup_Cleaner(number_days, weeks_days, path)
-    files.cleaner()
+#----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    for folder_name in os.walk(path):
+
+        if 'bucket' in folder_name[0]:
+            path = folder_name[0]
+
+            for file in os.listdir(path):
+                starting: Optional = file.rfind('_') + 1
+                ending: Optional = file.find('.')
+                file_date: Optional = file[starting:ending]
+
+                
+                file_date: Optional = datetime.strptime(file_date, '%Y-%m-%d')
+                clean = BackupCleaner(current_date, file_date)
+                if clean.check_five_days(file):
+                    if clean.check_sat(file) == False:
+                        if clean.check_last_day(file) == False:
+                            os.remove(path + '\\' + file)
+                            print("Files are Removed")
+                    else:
+                        if saturday_count > 4:
+                            if clean.check_last_day(file) == False:
+                                os.remove(path + '\\' + file)
+                                print("Files are removed")
+                        else:
+                            saturday_count += 1
