@@ -7,9 +7,10 @@
 #  Michele is name My
 # shown back to me.
 #.......................................................................................................................
+from typing import List
 
-def reverse_words(long_string):
-    words = long_string.split(" ")
+def reverse_words(long_string: str) -> str:
+    words: List[str] = long_string.split(" ")
 
     return " ".join(words[::-1])
 
