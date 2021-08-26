@@ -14,21 +14,25 @@
 #................................................................................................................
 
 import random
+from typing import List
+
 
 #--------------------------------------------------------------------------
 
-def intersection_list():
+def intersection_list() -> [List] :
 
  print("*-"*25)
- first_list_length = int(input("\nEnter the size for first list : "))
- second_list_length = int(input(" Enter the size for second list : "))
+ 
+ first_list_length: int = int(input("\nEnter the size for first list : "))
+ second_list_length: int = int(input(" Enter the size for second list : "))
 
- random_first_list = [random.randrange(1, 100) for i in range(first_list_length)]
+ random_first_list: List[int] = [random.randrange(1, 100) for i in range(first_list_length)]
 
- random_second_list = [random.randrange(1, 100) for i in range(second_list_length)]
+ random_second_list: List[int] = [random.randrange(1, 100) for i in range(second_list_length)]
 
  print("*-"*25, "\nFirst Random generated list are :", random_first_list)
  print("Second Random generated list :", random_second_list)
+
 
  return "The Common Elements are :", list(set(random_first_list) & set(random_second_list))
 
