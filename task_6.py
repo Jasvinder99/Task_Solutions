@@ -8,9 +8,11 @@
 
 import task_5
 import subprocess
-#------------------------------------------------------
+from typing import Optional
 
-def save_name():
+#------------------------------------------------------
+# we can aslo use List[str] Datatype as output for save_name function
+def save_name() -> Optional:
     with open("file_name", "w") as obj:
         subprocess.run('python task_5.py', stdout = obj, text = True)
 
