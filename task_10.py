@@ -1,19 +1,17 @@
-# Task 5
+# Task 10
 
-# Use the BeautifulSoup and requests Python packages to print out a list of all the news titles on the https://news.ycombinator.com/.
+# Assuming that we have some email addresses in the "username@companyname.com" format,
+# please write program to print the company name of a given email address. Both user names and company names are composed of letters only.
+# Example:
+# If the following email address is given as input to the program:
+# akita@securitybrigade.com
+# Then, the output of the program should be:
+# securitybrigade
+# In case of input data being supplied to the question, it should be assumed to be a console input.
 #.......................................................................................................................
+import typing
+def get_company_name(url: str) ->[str]:
+        return url.split('@')[-1].replace(".com", "")
 
-import bs4
-import requests
-from typing import Optional
-
-
-#----------------------------------------------------------------------------------
-
-get_request: Optional = requests.get("https://news.ycombinator.com/")
-var_soup: Optional = bs4.BeautifulSoup(get_request.text, 'lxml')
-#storylink is class from a tag to get all news titles
-news_title: Optional[classmethod] = var_soup.select(".storylink")
-
-for i in var_soup.select('.storylink'):
-    print(i.text)
+#------------------------------------------------------------------------------------------------------------------
+print(get_company_name(input()))
