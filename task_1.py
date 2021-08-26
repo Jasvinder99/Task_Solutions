@@ -17,11 +17,11 @@ print(first_last_element())
 from typing import List
 
 def first_last_element() -> [List]:
-    #number_list: list = []
+    #number_list: List = []
     print("\n")
 
     try:
-        number_list = list(input("Enter the number list :").split(" " or ","))
+        number_list: List = list(input("Enter the number list :").split(" " or ","))
 
     except ValueError:
         print("Please enter valid Number list:")
