@@ -10,13 +10,15 @@
 #.......................................................................................................................
 
 import random
+import typing
+
 #-------------------------------------------
 
-def password_generator():
+def password_generator() -> [str]:
 
-    characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=`~!@#$%^&*()_+[]{}\|;':,./<>?"
-    password_length = int(input("\nEnter the Length for password,for example 4,5,9 ..etc"))
-    password = ""
+    characters: str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=`~!@#$%^&*()_+[]{}\|;':,./<>?"
+    password_length: int = int(input("\nEnter the Length for password,for example 4,5,9 ..etc"))
+    password: str = ""
 
     for number in range(0, password_length):
 
@@ -36,7 +38,7 @@ if __name__ == '__main__' :
 
     while True :
 
-        generate_again = input("\nDo you want to Generate new Password again ..? y/n")
+        generate_again: str = input("\nDo you want to Generate new Password again ..? y/n")
 
         if generate_again == "y" :
 
