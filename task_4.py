@@ -11,10 +11,11 @@
 # - Scissors beats paper
 # - Paper beats rock
 #.......................................................................................................................
+from typing import Dict
 
-def winner(player_1, player_2):
+def winner(player_1: str, player_2: str) -> [str]:
 
-    game_dictionary = {'1':'3', '3':'2', '2':'1'}
+    game_dictionary: Dict = {'1':'3', '3':'2', '2':'1', 'rock':'scissors', 'scissors':'paper', 'paper':'rock'}
 
     if game_dictionary[player_1] == player_2 :
         return "\n Player 1 Won! Congratulations !!"
@@ -28,11 +29,11 @@ def winner(player_1, player_2):
 
 #---------------------------------------------------------------------------------------------------------------------
 
-def input_from_players():
+def input_from_players() -> [str]:
 
-    print("\n***** Welcome to Rock-Paper-Scissors Game *****","\nChoose the Number\t1. Rock\t2. Paper\t3. Scissors")
-    player_1 = input("\nPlayer_1 : choose the number  1. Rock 2. Paper 3. Scissors :")
-    player_2 = input("Player_2 : choose 1.Rock 2.Paper 3.Scissors :")
+    print("\n***** Welcome to Rock-Paper-Scissors Game *****","\nChoose the Number or type\t1. Rock\t2. Paper\t3. Scissors")
+    player_1: str = input("\nPlayer_1 : choose the number  1. Rock 2. Paper 3. Scissors :")
+    player_2: str = input("Player_2 : choose 1.Rock 2.Paper 3.Scissors :")
 
     return winner(player_1, player_2)
 #----------------------------------------------------------------------------------------------------------------------
@@ -41,7 +42,7 @@ print(input_from_players())
 # condition to ask for playing again
 
 while True :
-    play_again = input("\nDo you want to play Again..?  y/n")
+    play_again: str = input("\nDo you want to play Again..?  y/n")
 
     if play_again == "y" :
         print(input_from_players())
