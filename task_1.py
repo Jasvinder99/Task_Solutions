@@ -14,9 +14,10 @@ print(first_last_element())
 '''
 #------------------------------------------------------------------------------------
 # Solution 2:
+from typing import List
 
-def first_last_element():
-    number_list = []
+def first_last_element() -> [List]:
+    #number_list: list = []
     print("\n")
 
     try:
