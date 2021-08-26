@@ -4,10 +4,12 @@
 #.......................................................................................................................
 
 import gzip
+import typing
+
 #----------------------------------------
 
-long_string = b'Music industry hails passage of the Music Modernization Act'
-string_compress = gzip.compress(long_string)
+long_string: [str] = b'Music industry hails passage of the Music Modernization Act'
+string_compress: [str] = gzip.compress(long_string)
 
 print("\n Compressed String is :", gzip.compress(long_string))
 print("\n Deompresseed String is :", gzip.decompress(string_compress))
